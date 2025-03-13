@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter for Demi</title>
+    <style>
+        body {
+            background-color: #ffebf0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            margin-top: 50px;
+        }
+        .envelope {
+            width: 200px;
+            height: 120px;
+            background: #ff6666;
+            position: relative;
+            margin: auto;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .flap {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid #ff4d4d;
+            position: absolute;
+            top: -70px;
+            left: 0;
+            transition: transform 0.5s;
+            transform-origin: top;
+        }
+        .letter {
+            width: 180px;
+            height: 100px;
+            background: white;
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .hearts {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            color: red;
+            font-size: 20px;
+            animation: floatUp 3s infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" onclick="openLetter()">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="letter" id="letter">
+                <p>Dear Demi,</p>
+                <p>You are special, and this message is just for you. 💖</p>
+                <p>With love,</p>
+                <p>💓</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openLetter() {
+            document.querySelector('.flap').style.transform = 'rotateX(180deg)';
+            document.getElementById('letter').style.opacity = '1';
+            document.getElementById('letter').style.transform = 'translateY(0)';
+            
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('hearts');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
