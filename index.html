@@ -6,94 +6,160 @@
     <title>Letter for Demi</title>
     <style>
         body {
-            background-color: #ffebf0;
+            background-color: #ffe6f7;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
         }
+
         .container {
-            position: relative;
-            margin-top: 50px;
+            margin-top: 100px;
         }
-        .envelope {
-            width: 200px;
-            height: 120px;
-            background: #ff6666;
-            position: relative;
-            margin: auto;
-            border-radius: 10px;
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.5s;
+            transition: background-color 0.3s ease;
+            margin: 0 15px;
+            font-weight: bold;
         }
+
+        .open-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .skip-btn {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .envelope {
+            width: 250px;
+            height: 160px;
+            background: #ff6666;
+            border-radius: 15px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 1s ease-out;
+        }
+
         .flap {
             width: 0;
             height: 0;
-            border-left: 100px solid transparent;
-            border-right: 100px solid transparent;
-            border-bottom: 70px solid #ff4d4d;
+            border-left: 125px solid transparent;
+            border-right: 125px solid transparent;
+            border-bottom: 80px solid #ff4d4d;
             position: absolute;
-            top: -70px;
+            top: -80px;
             left: 0;
-            transition: transform 0.5s;
             transform-origin: top;
+            transition: transform 1s ease-out;
         }
+
         .letter {
-            width: 180px;
-            height: 100px;
+            width: 220px;
+            height: 120px;
             background: white;
+            padding: 20px;
             position: absolute;
             top: 20px;
-            left: 10px;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            left: 15px;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s, transform 0.5s;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: opacity 1s, transform 1s ease;
+            text-align: left;
         }
+
+        .letter p {
+            margin: 10px 0;
+        }
+
+        .signature {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 18px;
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+
         .hearts {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            font-size: 25px;
+            animation: floatUp 5s infinite;
             color: red;
-            font-size: 20px;
-            animation: floatUp 3s infinite;
         }
+
         @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100px); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-100px) rotate(45deg); opacity: 0.7; }
+            100% { transform: translateY(-200px) rotate(90deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="container" onclick="openLetter()">
-        <div class="envelope">
-            <div class="flap"></div>
+    <div class="container">
+        <div class="envelope" id="envelope" onclick="openLetter()">
+            <div class="flap" id="flap"></div>
             <div class="letter" id="letter">
-                <p>Dear Demi,</p>
-                <p>You are special, and this message is just for you. 💖</p>
-                <p>With love,</p>
-                <p>💓</p>
+                <p><strong>Dear Demi,</strong></p>
+                <p>I love you so much, Demi. You are the light of my life and make everything better just by being you. Every moment with you is unforgettable.</p>
+                <p>With all my love,</p>
+                <p><strong>❤️</strong></p>
+                <div class="signature">Ray</div>
             </div>
+        </div>
+
+        <div class="buttons">
+            <button class="open-btn" id="openBtn" onclick="openLetter()">Open</button>
+            <button class="skip-btn" id="skipBtn" onclick="skipLetter()">Skip</button>
         </div>
     </div>
 
     <script>
+        let isOpened = false;
+
         function openLetter() {
-            document.querySelector('.flap').style.transform = 'rotateX(180deg)';
+            if (isOpened) return;  // Prevent multiple clicks
+            isOpened = true;
+
+            // Animate the flap opening
+            document.getElementById('flap').style.transform = 'rotateX(180deg)';
             document.getElementById('letter').style.opacity = '1';
             document.getElementById('letter').style.transform = 'translateY(0)';
             
+            // Show floating hearts
             for (let i = 0; i < 10; i++) {
                 let heart = document.createElement('div');
                 heart.classList.add('hearts');
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
                 document.body.appendChild(heart);
-                setTimeout(() => { heart.remove(); }, 3000);
+                setTimeout(() => { heart.remove(); }, 5000);
             }
+
+            // Hide the buttons after opening
+            document.getElementById('openBtn').style.display = 'none';
+            document.getElementById('skipBtn').style.display = 'none';
+        }
+
+        function skipLetter() {
+            // If "Skip" is clicked, simulate opening the letter immediately
+            openLetter();
         }
     </script>
 </body>
